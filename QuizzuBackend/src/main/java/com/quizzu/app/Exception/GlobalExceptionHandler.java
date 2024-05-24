@@ -1,4 +1,4 @@
-package com.nrifintech.mms.Exception;
+package com.quizzu.app.Exception;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;

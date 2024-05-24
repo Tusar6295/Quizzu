@@ -1,2 +1,7 @@
-package com.quizzu.app.service;public class UserService {
+package com.quizzu.app.service;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserService {
 }

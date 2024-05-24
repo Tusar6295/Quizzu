@@ -1,2 +1,7 @@
-package com.quizzu.app.entity;public enum Role {
+package com.quizzu.app.entity;
+
+public enum Role {
+
+    USER,
+    ADMIN
 }

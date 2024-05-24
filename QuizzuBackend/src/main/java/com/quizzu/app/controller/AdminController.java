@@ -1,2 +1,4 @@
-package com.quizzu.app.controller;public class AdminController {
+package com.quizzu.app.controller;
+
+public class AdminController {
 }
