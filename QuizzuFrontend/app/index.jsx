@@ -9,7 +9,7 @@ const App = () => {
       <ScrollView contentContainerStyle={{height: '100%'}}>
         <View className="flex-1 justify-center items-center ">
           <Text className="text-white">App</Text>
-          <Link href="signUp" className='text-white text-3xl'>Go to sign up</Link>
+          <Link href="/signUp" className='text-white text-3xl'>Go to sign up</Link>
         </View>
       <StatusBar backgroundColor='#161622' style='light'/>
       </ScrollView>
