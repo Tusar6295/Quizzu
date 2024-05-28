@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
-@CrossOrigin
+@CrossOrigin("*")
 public class AuthenticationController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest authenticateRequest) {
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest authenticateRequest) throws Exception {
         return ResponseEntity.ok(this.authenticationService.authenticate(authenticateRequest));
     }
 

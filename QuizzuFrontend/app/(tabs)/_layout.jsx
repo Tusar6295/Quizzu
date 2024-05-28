@@ -35,14 +35,15 @@ const TabLayout = () => {
                 options={{
                     title: "Home",
                     headerShown: false,
+                    animation: 'fade',
                     tabBarIcon: ({color, focused}) => (
                         <TabIcon
                             icon={icons.home}
                             color={color}
                             name="Home"
                             focused={focused}
-                        />
-                    )
+                        />     
+                    ),
                 }}
             />
             <Tabs.Screen

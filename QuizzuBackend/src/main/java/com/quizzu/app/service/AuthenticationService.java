@@ -1,5 +1,6 @@
 package com.quizzu.app.service;
 
+import com.quizzu.app.Exception.InvalidCredentialsException;
 import com.quizzu.app.Exception.UsernameAlreadyExistsException;
 import com.quizzu.app.config.JwtService;
 import com.quizzu.app.dto.AuthenticationRequest;
@@ -10,6 +11,7 @@ import com.quizzu.app.entity.User;
 import com.quizzu.app.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -38,7 +40,7 @@ public class AuthenticationService {
         User user = this.userRepo.findByUserEmail(registerRequest.getUserEmail());
         if(user != null)
         {
-            throw new UsernameAlreadyExistsException("Username already exists");
+            throw new UsernameAlreadyExistsException("User already exists");
         }
         System.out.println("check passed");
         User user1 =  new User();
@@ -50,14 +52,19 @@ public class AuthenticationService {
         return this.userRepo.save(user1);
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest authenticateRequest)
+    public AuthenticationResponse authenticate(AuthenticationRequest authenticateRequest) throws Exception
     {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticateRequest.getUserEmail(),authenticateRequest.getPassword()));
+        try{
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticateRequest.getUserEmail(),authenticateRequest.getPassword()));
 
-        User user = this.userRepo.findByUserEmail(authenticateRequest.getUserEmail());
-        var accessToken = this.jwtService.generateToken(user);
-        var refreshToken = this.jwtService.generateRefreshToken(user);
-        return new AuthenticationResponse(accessToken,refreshToken);
+            User user = this.userRepo.findByUserEmail(authenticateRequest.getUserEmail());
+            var accessToken = this.jwtService.generateToken(user);
+            var refreshToken = this.jwtService.generateRefreshToken(user);
+            return new AuthenticationResponse(accessToken,refreshToken);
+        }catch(BadCredentialsException e){
+            throw new InvalidCredentialsException("Invalid username or password");
+        }
+
     }
 
     public AuthenticationResponse refreshToken(String refreshToken) {
