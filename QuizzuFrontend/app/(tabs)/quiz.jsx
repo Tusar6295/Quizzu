@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const quiz = () => {
+const Quiz = () => {
   return (
     <View>
       <Text>quiz</Text>
@@ -9,4 +9,4 @@ const quiz = () => {
   )
 }
 
-export default quiz
+export default Quiz
