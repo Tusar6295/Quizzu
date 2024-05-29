@@ -10,8 +10,9 @@ const App = () => {
         <View className="flex-1 justify-center items-center ">
           <Text className="text-white">App</Text>
           <Link href="/signUp" className='text-white text-3xl'>Go to sign up</Link>
+          <Link href="/home" className='text-white text-3xl mt-4'>Go to home</Link>
         </View>
-      <StatusBar backgroundColor='#161622' style='light'/>
+      <StatusBar backgroundColor='#7C72E5' style='light'/>
       </ScrollView>
     </SafeAreaView>
   )

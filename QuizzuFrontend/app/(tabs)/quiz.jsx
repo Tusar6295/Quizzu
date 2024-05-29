@@ -1,11 +1,16 @@
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 import React from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { StatusBar } from 'expo-status-bar'
 
 const Quiz = () => {
   return (
-    <View>
-      <Text>quiz</Text>
-    </View>
+    <SafeAreaView className="h-full bg-primary">
+    <ScrollView>
+
+    </ScrollView>
+    <StatusBar backgroundColor='#7C72E5' style='light'/>
+  </SafeAreaView>
   )
 }
 
