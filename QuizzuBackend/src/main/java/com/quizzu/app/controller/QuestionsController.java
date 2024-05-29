@@ -14,11 +14,4 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/question")
 public class QuestionsController {
 
-    @Autowired
-    private QuestionService questionService;
-    @PostMapping("/createQuestion")
-    public ResponseEntity<Question> createQuestion(@RequestBody QuestionDto questionDto) throws Exception
-    {
-        return ResponseEntity.ok(this.questionService.addQuestion(questionDto));
-    }
 }

@@ -4,8 +4,11 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
 import { icons, images } from '../../constants'
 import SearchInput from '../../components/SearchInput'
+import useData from '../../config/useData'
+import { getCategories } from '../../config/api'
 
 const Home = () => {
+  const {data: categories} = useData(getCategories);
   return (
     <SafeAreaView className="h-full bg-primary">
       <View className="px-8 my-6 space-y-6">
@@ -27,21 +30,7 @@ const Home = () => {
 
       <FlatList
         className="w-full"
-        data={[
-          { id: 1, title: "Maths" },
-          { id: 2, title: "Science" },
-          { id: 3, title: "GK" },
-          { id: 4, title: "History" },
-          { id: 5, title: "Geography" },
-          { id: 6, title: "Literature" },
-          { id: 7, title: "Technology" },
-          { id: 8, title: "Art" },
-          { id: 9, title: "Sports" },
-          { id: 10, title: "Music" },
-          { id: 11, title: "Politics" },
-          { id: 12, title: "Business" },
-          { id: 13, title: "Health" }
-        ]}
+        data={categories}
         keyExtractor={(item) => item.id.toString()}
         numColumns={2}
         columnWrapperStyle={style.row}

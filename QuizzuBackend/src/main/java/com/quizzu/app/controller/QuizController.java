@@ -10,20 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/quizzes")
+@RequestMapping("/quiz")
 @CrossOrigin("*")
 public class QuizController {
 
-    @Autowired
-    private QuizService quizService;
-
-    @PostMapping
-    public ResponseEntity<Quiz> createQuiz(@RequestBody QuizDto quizDto) {
-        return ResponseEntity.ok(this.quizService.createQuiz(quizDto));
-    }
-
-
-
-
-
 }
+
+

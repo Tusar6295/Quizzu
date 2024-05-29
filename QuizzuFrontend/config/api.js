@@ -35,7 +35,21 @@ export const signIn = async (data) => {
     if (error.response && error.response.data.message==="Invalid username or password") {
       throw new Error(error.response.data.message);
     } else {
-      throw new Error('Something went wrong. Please try again.');
+      Alert.alert('Something went wrong. Please try again.')
     }
   }
 };
+
+export const getCategories = async () => {
+  try {
+    const response = await api.get('/category/getCategories');
+    return response.data;
+  } catch (error) {
+    if(error.response && error.response.data)
+      {
+        throw new Error(error.response.data.message);
+      } else {
+        Alert.alert('Something went wrong. Please try again.')
+      }
+  }
+}
