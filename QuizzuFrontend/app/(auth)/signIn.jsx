@@ -92,7 +92,6 @@ const SignIn = () => {
               </>
             )}
           </Formik>
-          <StatusBar style='dark' />
         </View>
       </ScrollView>
     </SafeAreaView>
