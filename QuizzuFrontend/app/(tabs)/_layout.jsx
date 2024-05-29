@@ -2,6 +2,7 @@ import { View, Text, Image } from 'react-native'
 import React from 'react'
 import { Tabs } from 'expo-router'
 import {icons} from '../../constants'
+import { StatusBar } from 'expo-status-bar'
 const TabIcon = ({icon,color,name,focused}) => {
     return (
         <View className="items-center justify-center gap-2">
@@ -24,9 +25,11 @@ const TabLayout = () => {
             screenOptions={{
                 tabBarShowLabel: false,
                 tabBarActiveTintColor: "#2C0B6A",
+                tabBarInactiveTintColor: "#7C72E5",
                 tabBarStyle:{
                     backgroundColor: "#ECE8FF",
                     borderTopWidth: 1,
+                    height: 75,
                 }
             }}
         >
@@ -77,6 +80,7 @@ const TabLayout = () => {
                 }}
             />
         </Tabs>
+        <StatusBar backgroundColor='#7C72E5' style='light'/>
     </>
   )
 }

@@ -104,7 +104,6 @@ const SignUp = () => {
               </>
             )}
           </Formik>
-          <StatusBar style='dark' />
         </View>
       </ScrollView>
     </SafeAreaView>
