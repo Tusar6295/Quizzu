@@ -2,8 +2,14 @@ package com.quizzu.app.entity;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,5 +22,4 @@ public class Answer {
     @JoinColumn(name = "question_id")
     private Question question;
 
-    // Getters and Setters
 }
