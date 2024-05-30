@@ -28,9 +28,14 @@ public class QuizService {
 
         return this.quizRepository.save(quiz);
     }
+<<<<<<< HEAD
 
     public List<Quiz> getAllQuizzes()
     {
         return this.quizRepository.findAll();
+=======
+    public List<Quiz> getQuizzesByCategory(Long categoryId) {
+        return this.quizRepository.findByCategoryId(categoryId);
+>>>>>>> 0a09e2495fc2a36c1edd9940a40497bd6619ac53
     }
 }
