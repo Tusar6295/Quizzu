@@ -13,7 +13,14 @@ import java.util.List;
 @RequestMapping("/quiz")
 @CrossOrigin("*")
 public class QuizController {
+    @Autowired
+    private QuizService quizService;
 
+    @GetMapping("/getAllQuizzes")
+    public List<Quiz> getAllQuizzes()
+    {
+        return this.quizService.getAllQuizzes();
+    }
 }
 
 

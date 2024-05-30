@@ -12,10 +12,6 @@ import com.quizzu.app.repo.QuizRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 @Service
 public class QuestionService {
 
@@ -28,8 +24,7 @@ public class QuestionService {
     @Autowired
     private AnswerRepository answerRepository;
 
-    public Question addQuestion(QuestionDto questionDto) throws Exception
-    {
+    public Question addQuestion(QuestionDto questionDto) throws Exception {
         Quiz quiz = quizRepository.findById(questionDto.getQuizId())
                 .orElseThrow(() -> new ResourceNotFoundException("Quiz not found with id: " + questionDto.getQuizId()));
 
@@ -37,7 +32,6 @@ public class QuestionService {
         question.setTitle(questionDto.getTitle());
         question.setQuiz(quiz);
         Question savedQuestion = questionRepository.save(question);
-
 
         for (AnswerDto answerDto : questionDto.getAnswers()) {
             Answer answer = new Answer();
@@ -50,25 +44,7 @@ public class QuestionService {
         return savedQuestion;
     }
 
-    public List<QuestionDto> getQuestionsByQuizId(Long quizId) {
-        List<Question> questions = questionRepository.findQuestionsWithAnswersByQuizId(quizId);
-        return questions.stream().map(this::convertToDto).collect(Collectors.toList());
-    }
-
-    private QuestionDto convertToDto(Question question) {
-        return new QuestionDto(
-                question.getTitle(),
-                question.getQuiz().getId(),
-                question.getAnswers().stream()
-                        .map(this::convertAnswerToDto)
-                        .collect(Collectors.toList())
-        );
-    }
-
-    private AnswerDto convertAnswerToDto(Answer answer) {
-        return new AnswerDto(
-                answer.getText(),
-                answer.isCorrect()
-        );
+    public List<Question> getAllQuestions(Long id) {
+        return this.questionRepository.findByQuizId(id);
     }
 }

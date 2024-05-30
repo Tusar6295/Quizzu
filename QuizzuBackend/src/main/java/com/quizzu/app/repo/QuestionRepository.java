@@ -8,8 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import java.util.List;
+
 @Repository
-public interface QuestionRepository extends JpaRepository<Question,Long> {
-    @Query("SELECT q FROM Question q LEFT JOIN FETCH q.answers WHERE q.quiz.id = :quizId")
-    List<Question> findQuestionsWithAnswersByQuizId(@Param("quizId") Long quizId);
+public interface QuestionRepository extends JpaRepository<Question, Long> {
+
+    List<Question> findByQuizId(Long id);
 }
