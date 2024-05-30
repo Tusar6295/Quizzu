@@ -29,4 +29,8 @@ public class CategoryService {
     public List<Category> getAllCategories(){
         return this.categoryRepository.findAll();
     }
+
+    public List<Category> searchCategory(String searchQuery){
+        return this.categoryRepository.findByTitleContainingIgnoreCase(searchQuery);
+    }
 }

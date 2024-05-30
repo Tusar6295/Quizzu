@@ -5,12 +5,12 @@ const CustomButton = ({name,containerStyles,onPress,isSubmitting,textStyles}) =>
   return (
     <TouchableOpacity 
         onPress={onPress}
-        className={`${containerStyles} w-full h-16 bg-secondary rounded-xl
-           justify-center items-center ${isSubmitting ? 'opacity-50' : ''}
+        className={`w-full h-16 rounded-xl justify-center items-center 
+        ${isSubmitting ? 'opacity-50' : ''} ${containerStyles} 
         `} 
         disabled={isSubmitting}
     >
-      <Text className={`${textStyles} text-white font-psemibold text-lg `}>{name}</Text>
+      <Text className={`font-psemibold text-lg ${textStyles} `}>{name}</Text>
     </TouchableOpacity>
   )
 }

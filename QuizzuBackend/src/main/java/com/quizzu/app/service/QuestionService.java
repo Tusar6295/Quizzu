@@ -41,7 +41,7 @@ public class QuestionService {
         for (AnswerDto answerDto : questionDto.getAnswers()) {
             Answer answer = new Answer();
             answer.setText(answerDto.getText());
-            answer.setCorrect(answerDto.isCorrect());
+            answer.setCorrect(answerDto.getIsCorrect());
             answer.setQuestion(savedQuestion);
             answerRepository.save(answer);
         }

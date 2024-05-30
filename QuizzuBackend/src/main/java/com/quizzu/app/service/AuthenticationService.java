@@ -60,7 +60,15 @@ public class AuthenticationService {
             User user = this.userRepo.findByUserEmail(authenticateRequest.getUserEmail());
             var accessToken = this.jwtService.generateToken(user);
             var refreshToken = this.jwtService.generateRefreshToken(user);
-            return new AuthenticationResponse(accessToken,refreshToken);
+
+            AuthenticationResponse response = new AuthenticationResponse();
+            response.setAccessToken(accessToken);
+            response.setRefreshToken(refreshToken);
+            response.setFirstName(user.getFirstName());
+            response.setUserId(user.getId());
+            response.setUserEmail(user.getUserEmail());
+
+            return response;
         }catch(BadCredentialsException e){
             throw new InvalidCredentialsException("Invalid username or password");
         }
@@ -73,7 +81,14 @@ public class AuthenticationService {
             String username = jwtService.extractUsername(refreshToken);
             User user = userRepo.findByUserEmail(username);
             String newAccessToken = jwtService.generateToken(user);
-            return new AuthenticationResponse(newAccessToken, refreshToken);
+            AuthenticationResponse response = new AuthenticationResponse();
+            response.setAccessToken(newAccessToken);
+            response.setRefreshToken(refreshToken);
+            response.setFirstName(user.getFirstName());
+            response.setUserId(user.getId());
+            response.setUserEmail(user.getUserEmail());
+
+            return response;
         } else {
             throw new RuntimeException("Invalid refresh token");
         }

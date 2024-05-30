@@ -5,10 +5,7 @@ import com.quizzu.app.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,4 +24,9 @@ public class CategoryController {
         return ResponseEntity.ok(this.categoryService.getAllCategories());
     }
 
+    @GetMapping("/searchCategory")
+    public ResponseEntity<List<Category>> searchCategory(@RequestParam String searchQuery)
+    {
+        return ResponseEntity.ok(this.categoryService.searchCategory(searchQuery));
+    }
 }
