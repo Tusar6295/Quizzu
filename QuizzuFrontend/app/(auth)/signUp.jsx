@@ -93,7 +93,8 @@ const SignUp = () => {
                     name="Create Account"
                     onPress={handleSubmit}
                     isSubmitting={isSubmitting}
-                    containerStyles="mt-7"
+                    containerStyles="mt-7 bg-secondary"
+                    textStyles="text-white"
                   />
                 )}
 
