@@ -13,8 +13,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Home = () => {
   const pathname = usePathname();
-  const {signOut} = useContext(AuthContext);
-  const [searchQuery, setSearchQuery] = useState('');
+  const { signOut } = useContext(AuthContext);
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchParams, setSearchParams] = useState(null);
   const { data: categories, isLoading, refetch } = useData(searchParams ? searchByCategory : getCategories, searchParams);
   const [userData, setUserData] = useState({ firstName: "" });
@@ -39,7 +39,6 @@ const Home = () => {
     }
   }, [searchQuery]);
 
-
   return (
     <SafeAreaView className="h-full bg-primary">
       <View className="px-8 my-6 space-y-6">
@@ -49,28 +48,20 @@ const Home = () => {
             <Text className="text-2xl font-psemibold text-white">{userData.firstName}</Text>
           </View>
           <View className="flex-row gap-3">
-          <Image
-            source={images.logo}
-            className="w-[50] h-[64]"
-          />
-          <TouchableOpacity 
-            className="items-center justify-center"
-            onPress={signOut}
-          >
-             <Ionicons 
-                name="log-out-outline"
-                size={50}
-                color="white"
-             />
-          </TouchableOpacity>
+            <Image source={images.logo} className="w-[50] h-[64]" />
+            <TouchableOpacity
+              className="items-center justify-center"
+              onPress={signOut}
+            >
+              <Ionicons name="log-out-outline" size={50} color="white" />
+            </TouchableOpacity>
           </View>
-          
         </View>
         <SearchInput
-            value={searchQuery}
-            onChangeText={(e) => setSearchQuery(e)}
-            onSearch={handleSearch}
-            isLoading={isLoading}
+          value={searchQuery}
+          onChangeText={(e) => setSearchQuery(e)}
+          onSearch={handleSearch}
+          isLoading={isLoading}
         />
       </View>
 
@@ -97,15 +88,14 @@ const Home = () => {
       />
       )}
     </SafeAreaView>
-
-  )
-}
+  );
+};
 
 const style = StyleSheet.create({
   row: {
     flex: 1,
     justifyContent: "center",
-  }
+  },
 });
 
-export default Home
+export default Home;

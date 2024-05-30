@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import java.util.List;
+
 @Service
 public class QuizService {
 
@@ -27,6 +29,9 @@ public class QuizService {
         quiz.setTimeLimit(quizDto.getTimeLimit());
 
         return this.quizRepository.save(quiz);
+    }
+    public List<Quiz> getQuizzesByCategory(Long categoryId) {
+        return this.quizRepository.findByCategoryId(categoryId);
     }
 
     public List<Quiz> getAllQuizzes()
