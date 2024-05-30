@@ -89,7 +89,8 @@ export const searchByCategory = async (query) => {
 
 export const getQuizzesByCategory = async (categoryId) => {
   try {
-    const response = await api.get(`/quiz/quizList/${categoryId}`);
+    console.log("categoryid: " +categoryId)
+    const response = await api.get(`/quiz/getQuizList/${categoryId}`);
     return response.data;
   } catch (error) {
     if (error.response && error.response.data) {

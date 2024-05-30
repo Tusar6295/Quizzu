@@ -78,6 +78,11 @@ const Home = () => {
         columnWrapperStyle={style.row}
         renderItem={({ item }) => (
           <TouchableOpacity
+          onPress={() => {
+            const categoryId = item.id;
+            if (pathname.startsWith("/Quizzes")) router.setParams({ categoryId});
+            else router.push(`/Quizzes/${categoryId}`);
+          }}
           >
             <View className="w-[150] h-[150] m-4 bg-secondary-100 rounded-xl justify-center items-center">
               <Text className="text-xl font-psemibold text-secondary-900 text-center">{item.title}</Text>

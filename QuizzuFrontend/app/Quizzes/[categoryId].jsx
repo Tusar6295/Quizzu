@@ -8,7 +8,6 @@ import { FlatList } from "react-native";
 
 const QuizList = () => {
   const { categoryId } = useLocalSearchParams();
-  console.log(categoryId);
   const { data: quizList } = useData(getQuizzesByCategory, categoryId);
 
   const renderItem = ({ item }) => (
