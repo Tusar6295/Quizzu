@@ -12,7 +12,9 @@ import com.quizzu.app.repo.QuizRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionService {
@@ -46,5 +48,27 @@ public class QuestionService {
         }
 
         return savedQuestion;
+    }
+
+    public List<QuestionDto> getQuestionsByQuizId(Long quizId) {
+        List<Question> questions = questionRepository.findQuestionsWithAnswersByQuizId(quizId);
+        return questions.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
+    private QuestionDto convertToDto(Question question) {
+        return new QuestionDto(
+                question.getTitle(),
+                question.getQuiz().getId(),
+                question.getAnswers().stream()
+                        .map(this::convertAnswerToDto)
+                        .collect(Collectors.toList())
+        );
+    }
+
+    private AnswerDto convertAnswerToDto(Answer answer) {
+        return new AnswerDto(
+                answer.getText(),
+                answer.isCorrect()
+        );
     }
 }
