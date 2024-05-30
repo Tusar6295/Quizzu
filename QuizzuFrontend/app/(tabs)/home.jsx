@@ -9,6 +9,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { AuthContext } from '../../context/GlobalContext'
 import { useState } from 'react'
 import { router, usePathname } from 'expo-router'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Home = () => {
   const pathname = usePathname();
@@ -16,6 +17,17 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchParams, setSearchParams] = useState(null);
   const { data: categories, isLoading, refetch } = useData(searchParams ? searchByCategory : getCategories, searchParams);
+  const [userData, setUserData] = useState({ firstName: "" });
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const storedUserData = await AsyncStorage.getItem('userData');
+      if (storedUserData) {
+        setUserData(JSON.parse(storedUserData));
+      }
+    };
+    fetchUserData();
+  }, []);
 
   const handleSearch = () => {
     setSearchParams(searchQuery.trim() ? searchQuery : null);
@@ -34,7 +46,7 @@ const Home = () => {
         <View className="flex-row mb-6 justify-between">
           <View>
             <Text className="text-sm font-pmedium text-white">Welcome Back</Text>
-            <Text className="text-2xl font-psemibold text-white">Sai Dheeraj</Text>
+            <Text className="text-2xl font-psemibold text-white">{userData.firstName}</Text>
           </View>
           <View className="flex-row gap-3">
           <Image
@@ -75,11 +87,6 @@ const Home = () => {
         columnWrapperStyle={style.row}
         renderItem={({ item }) => (
           <TouchableOpacity
-          onPress={() => {
-            const categoryId = item.id;
-            if (pathname.startsWith("/quizzes")) router.setParams({ categoryId});
-            else router.push(`/quizzes/${categoryId}`);
-          }}
           >
             <View className="w-[150] h-[150] m-4 bg-secondary-100 rounded-xl justify-center items-center">
               <Text className="text-xl font-psemibold text-secondary-900 text-center">{item.title}</Text>
