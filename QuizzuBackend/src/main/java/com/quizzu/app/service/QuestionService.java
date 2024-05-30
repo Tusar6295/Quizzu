@@ -12,6 +12,7 @@ import com.quizzu.app.repo.QuizRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,5 +47,11 @@ public class QuestionService {
         }
 
         return savedQuestion;
+    }
+
+
+    public List<Question> getAllQuestions(Long id)
+    {
+        return this.questionRepository.findByQuizId(id);
     }
 }
