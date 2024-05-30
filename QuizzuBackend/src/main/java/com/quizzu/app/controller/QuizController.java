@@ -16,19 +16,10 @@ import java.util.List;
 public class QuizController {
     @Autowired
     private QuizService quizService;
-<<<<<<< HEAD
 
-    @GetMapping("/getAllQuizzes")
-    public List<Quiz> getAllQuizzes()
-    {
-        return this.quizService.getAllQuizzes();
-=======
     @GetMapping("/getQuizList/{categoryId}")
-    public ResponseEntity<List<Quiz>> getQuizList(@PathVariable("categoryId") Long categoryId){
+    public ResponseEntity<List<Quiz>> getQuizList(@PathVariable("categoryId") Long categoryId) {
         List<Quiz> quizzes = this.quizService.getQuizzesByCategory(categoryId);
         return ResponseEntity.ok(quizzes);
->>>>>>> 0a09e2495fc2a36c1edd9940a40497bd6619ac53
     }
 }
-
-
