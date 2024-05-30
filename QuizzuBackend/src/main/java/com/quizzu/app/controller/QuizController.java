@@ -20,9 +20,8 @@ public class QuizController {
     public ResponseEntity<List<Quiz>> getQuizList(@PathVariable("categoryId") Long categoryId){
         List<Quiz> quizzes = this.quizService.getQuizzesByCategory(categoryId);
         return ResponseEntity.ok(quizzes);
-    }    @Autowired
-    private QuizService quizService;
-
+    }
+    @Autowired
     @GetMapping("/getAllQuizzes")
     public List<Quiz> getAllQuizzes()
     {
