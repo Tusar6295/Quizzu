@@ -1,5 +1,5 @@
 import { View, Text, Image, ScrollView, ActivityIndicator } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import { images } from '../../constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
@@ -9,8 +9,10 @@ import { Link, useRouter } from 'expo-router';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { signIn } from '../../config/api';
+import { AuthContext } from '../../context/GlobalContext';
 
 const SignIn = () => {
+  const { setUser, setIsLoggedIn } = useContext(AuthContext);
   const router = useRouter();
 
   const validationSchema = Yup.object().shape({
@@ -21,9 +23,10 @@ const SignIn = () => {
   const handleSignIn = async (values, { setSubmitting, setErrors, resetForm }) => {
     try {
       const response = await signIn(values);
-      console.log("success");
+      setIsLoggedIn(true);
+      setUser({token: response.accessToken});
       resetForm();
-      router.push('/home');
+      router.replace("/home");
     } catch (error) {
       setErrors({ apiError: error.message });
     } finally {
@@ -81,7 +84,8 @@ const SignIn = () => {
                     name="Login"
                     onPress={handleSubmit}
                     isSubmitting={isSubmitting}
-                    containerStyles="mt-7"
+                    containerStyles="mt-7 bg-secondary"
+                    textStyles="text-white"
                   />
                 )}
 
