@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useLocalSearchParams } from 'expo-router';
+import { View, Text, ScrollView, TouchableOpacity, Modal, SafeAreaView } from 'react-native';
+import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { getQuestionsByQuizId } from '../../config/api'; 
 import useData from '../../config/useData'; 
 import { Feather } from '@expo/vector-icons';
@@ -9,6 +8,7 @@ import { Feather } from '@expo/vector-icons';
 const QuestionList = () => {
   const { quizId } = useLocalSearchParams();
   const { data: questions, isLoading } = useData(getQuestionsByQuizId, quizId); 
+  const navigation = useNavigation();
   
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(null); 
@@ -16,6 +16,8 @@ const QuestionList = () => {
   const [timer, setTimer] = useState(10); 
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [resultMessage, setResultMessage] = useState('');
 
   useEffect(() => {
     if (!isLoading && questions.length > 0) {
@@ -53,41 +55,57 @@ const QuestionList = () => {
       setSelectedOptionIndex(null); 
       setTimer(10); 
     } else {
-      alert(`Quiz Completed!\nCorrect Answers: ${correctAnswers}\nWrong Answers: ${wrongAnswers}`);
-      setCurrentQuestionIndex(0);
+        setResultMessage(
+            <View>
+              <Text className="font-bold text-xl">Quiz Completed!</Text>
+              <Text className="text-lg">Correct Answers: {correctAnswers}</Text>
+              <Text className="text-lg">Wrong Answers: {wrongAnswers}</Text>
+            </View>
+          );
+      setModalVisible(true);
       setIsAnswered(false);
       setSelectedOptionIndex(null);
-      setTimer(10);
-      setCorrectAnswers(0); 
-      setWrongAnswers(0); 
     }
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+  const restartQuiz = () => {
+    setModalVisible(false);
+    // Reset the quiz
+    setCurrentQuestionIndex(0);
+    setTimer(10);
+    setCorrectAnswers(0); 
+    setWrongAnswers(0);
   };
 
   const currentQuestion = questions[currentQuestionIndex];
 
   return (
-    <SafeAreaView style={{ flex: 1 }} className="h-full bg-primary">
-      <ScrollView contentContainerStyle={styles.container}>
+    <SafeAreaView className="flex-1 h-full bg-primary p-4">
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         {currentQuestion && (
-          <View key={currentQuestion.id}>
-            <Text style={styles.questionNumber}>Question {currentQuestionIndex + 1}/{questions.length}</Text>
-            <View style={styles.timerContainer}>
-              <Feather name="clock" size={20} color="black" style={styles.clockIcon} />
-              <Text style={styles.timerText}>{timer} seconds remaining</Text>
+          <View key={currentQuestion.id} className="mb-4">
+            <Text className="text-xl text-center mb-2">
+              Question {currentQuestionIndex + 1}/{questions.length}
+            </Text>
+            <View className="flex-row items-center justify-center mb-4">
+              <Feather name="clock" size={20} color="black" className="mr-2" />
+              <Text className="text-lg">{timer} seconds remaining</Text>
             </View>
-            <Text style={styles.questionText}>{currentQuestion.title}</Text>
+            <Text className="text-2xl text-center mb-4">{currentQuestion.title}</Text>
             {currentQuestion.answers.map((answer, answerIndex) => (
               <TouchableOpacity
                 key={answer.id}
-                style={[
-                  styles.optionButton,
-                  isAnswered && answerIndex === selectedOptionIndex && !answer.correct && styles.wrongOption,
-                  isAnswered && answer.correct && styles.correctOption
-                ]}
+                className={`flex-row items-center justify-between w-full p-4 my-2 rounded-lg ${
+                  isAnswered && answerIndex === selectedOptionIndex && !answer.correct ? 'bg-red-200' : 'bg-gray-200'
+                } ${isAnswered && answer.correct ? 'bg-green-200' : ''}`}
                 onPress={() => handleAnswer(answerIndex)}
                 disabled={isAnswered}
               >
-                <Text style={styles.optionText}>{answer.text}</Text>
+                <Text className="text-lg">{answer.text}</Text>
                 {isAnswered && answer.correct && (
                   <Feather name="check-circle" size={20} color="green" />
                 )}
@@ -98,74 +116,33 @@ const QuestionList = () => {
             ))}
           </View>
         )}
-        <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
-          <Text style={styles.nextButtonText}>Next</Text>
+        <TouchableOpacity className="p-4 bg-gray-200 rounded-lg mt-10" onPress={handleNext}>
+          <Text className="text-lg text-black text-center">Next</Text>
         </TouchableOpacity>
       </ScrollView>
+
+      <Modal
+  animationType="slide"
+  transparent={true}
+  visible={modalVisible}
+  onRequestClose={closeModal}
+>
+  <View className="flex-1 justify-center items-center bg-transparent">
+    <View className="w-4/5 bg-white p-6 rounded-lg items-center">
+      {resultMessage}
+      <View className="flex-row justify-between mt-10 w-full">
+        <TouchableOpacity className="p-4 rounded-lg" style={{ backgroundColor: '#7C72E5' }} onPress={() => navigation.goBack()}>
+          <Text className="text-lg text-black">Back</Text>
+        </TouchableOpacity>
+        <TouchableOpacity className="p-4 rounded-lg" style={{ backgroundColor: '#7C72E5' }} onPress={restartQuiz}>
+          <Text className="text-lg text-black">Restart</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  </View>
+</Modal>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    padding: 16,
-    width: '100%',
-  },
-  questionText: {
-    fontSize: 24,
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  questionNumber: {
-    fontSize: 20,
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-  timerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 10,
-  },
-  clockIcon: {
-    marginRight: 5,
-  },
-  timerText: {
-    fontSize: 18,
-  },
-  optionButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-    padding: 16,
-    marginVertical: 8,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 8,
-    minWidth: '100%',
-  },
-  optionText: {
-    fontSize: 18,
-  },
-  correctOption: {
-    backgroundColor: '#d4edda',
-  },
-  wrongOption: {
-    backgroundColor: '#f8d7da',
-  },
-  nextButton: {
-    marginTop: 40,
-    padding: 16,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 8,
-    width: '100%',
-    alignItems: 'center',
-  },
-  nextButtonText: {
-    fontSize: 18,
-    color: 'black',
-  },
-});
 
 export default QuestionList;
