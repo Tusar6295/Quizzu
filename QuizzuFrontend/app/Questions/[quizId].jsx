@@ -13,7 +13,7 @@ const QuestionList = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(null); 
   const [isAnswered, setIsAnswered] = useState(false);
-  const [timer, setTimer] = useState(15); // Static timer of 15 seconds
+  const [timer, setTimer] = useState(10); 
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
 
@@ -51,13 +51,13 @@ const QuestionList = () => {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setIsAnswered(false);
       setSelectedOptionIndex(null); 
-      setTimer(15); // Reset timer to 15 seconds for each question
+      setTimer(10); 
     } else {
       alert(`Quiz Completed!\nCorrect Answers: ${correctAnswers}\nWrong Answers: ${wrongAnswers}`);
       setCurrentQuestionIndex(0);
       setIsAnswered(false);
       setSelectedOptionIndex(null);
-      setTimer(15); // Reset timer to 15 seconds for each question
+      setTimer(10);
       setCorrectAnswers(0); 
       setWrongAnswers(0); 
     }
