@@ -1,27 +1,3 @@
-<<<<<<< HEAD
-import {
-  View,
-  Text,
-  ScrollView,
-  Image,
-  FlatList,
-  StyleSheet,
-  ImageBackground,
-  TouchableOpacity,
-  ActivityIndicator,
-  Alert,
-} from "react-native";
-import React, { useContext, useEffect } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { icons, images } from "../../constants";
-import SearchInput from "../../components/SearchInput";
-import useData from "../../config/useData";
-import { getCategories, searchByCategory } from "../../config/api";
-import { Ionicons } from "@expo/vector-icons";
-import { AuthContext } from "../../context/GlobalContext";
-import { useState } from "react";
-import { Link, router, usePathname } from "expo-router";
-=======
 import { View, Text, ScrollView, Image, FlatList, StyleSheet, ImageBackground, TouchableOpacity, ActivityIndicator, Alert } from 'react-native'
 import React, { useContext, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -34,20 +10,12 @@ import { AuthContext } from '../../context/GlobalContext'
 import { useState } from 'react'
 import { router, usePathname } from 'expo-router'
 import AsyncStorage from '@react-native-async-storage/async-storage'
->>>>>>> e81af843345927f951e23f04e464df0a56f2537e
 
 const Home = () => {
   const pathname = usePathname();
   const { signOut } = useContext(AuthContext);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchParams, setSearchParams] = useState(null);
-<<<<<<< HEAD
-  const {
-    data: categories,
-    isLoading,
-    refetch,
-  } = useData(searchParams ? searchByCategory : getCategories, searchParams);
-=======
   const { data: categories, isLoading, refetch } = useData(searchParams ? searchByCategory : getCategories, searchParams);
   const [userData, setUserData] = useState({ firstName: "" });
 
@@ -60,7 +28,6 @@ const Home = () => {
     };
     fetchUserData();
   }, []);
->>>>>>> e81af843345927f951e23f04e464df0a56f2537e
 
   const handleSearch = () => {
     setSearchParams(searchQuery.trim() ? searchQuery : null);
