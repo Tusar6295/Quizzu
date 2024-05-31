@@ -100,3 +100,17 @@ export const getQuizzesByCategory = async (categoryId) => {
     }
   }
 };
+
+export const getQuestionsByQuizId = async (id) => {
+  try {
+    console.log("quizId: " + id);
+    const response = await api.get(`/question/getQuestions?id=${id}`);
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.data) {
+      throw new Error(error.response.data.message);
+    } else {
+      Alert.alert("Something went wrong. Please try again.");
+    }
+  }
+};
