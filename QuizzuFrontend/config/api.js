@@ -16,7 +16,7 @@ export const api = axios.create({
 const userData = {
   id: "",
   userEmail: "",
-  firstName: ""
+  firstName: "",
 };
 
 export const signUp = async (data) => {
@@ -42,13 +42,13 @@ export const signIn = async (data) => {
     console.log(data);
     const response = await api.post("/api/v1/auth/authenticate", data);
     const accessToken = response.data.accessToken;
-    await AsyncStorage.setItem('userToken', accessToken);
+    await AsyncStorage.setItem("userToken", accessToken);
 
     userData.firstName = response.data.firstName;
     userData.id = response.data.userId;
     userData.userEmail = response.data.userEmail;
-    await AsyncStorage.setItem('userData', JSON.stringify(userData));
-    
+    await AsyncStorage.setItem("userData", JSON.stringify(userData));
+
     return response.data;
   } catch (error) {
     if (
@@ -99,7 +99,7 @@ export const searchByQuiz = async (query) => {
 
 export const getQuizzesByCategory = async (categoryId) => {
   try {
-    console.log("categoryid: " +categoryId)
+    console.log("categoryid: " + categoryId);
     const response = await api.get(`/quiz/getQuizList/${categoryId}`);
     return response.data;
   } catch (error) {
