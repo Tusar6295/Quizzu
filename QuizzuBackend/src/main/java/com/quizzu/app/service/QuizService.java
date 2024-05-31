@@ -38,4 +38,9 @@ public class QuizService {
     {
         return this.quizRepository.findAll();
     }
+
+    public List<Quiz> searchQuiz(String searchQuery)
+    {
+        return this.quizRepository.findByTitleContainingIgnoreCase(searchQuery);
+    }
 }

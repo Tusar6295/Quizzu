@@ -61,6 +61,7 @@ const Home = () => {
           value={searchQuery}
           onChangeText={(e) => setSearchQuery(e)}
           onSearch={handleSearch}
+          placeholder="Search for a category"
           isLoading={isLoading}
         />
       </View>

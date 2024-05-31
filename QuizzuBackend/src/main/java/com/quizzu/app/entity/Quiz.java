@@ -26,7 +26,6 @@ public class Quiz {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    @JsonIgnore
     private Category category;
 
     @OneToMany(mappedBy = "quiz")

@@ -24,7 +24,7 @@ const SignUp = () => {
     try {
       const response = await signUp(values);
       resetForm();
-      router.push("/signIn")
+      router.replace("/signIn")
     } catch (error) {
       setErrors({ apiError: error.message });
     } finally {

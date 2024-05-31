@@ -1,36 +1,47 @@
-import { View, Text, ScrollView, Image } from 'react-native'
+import { View, Text, ScrollView, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React, { useContext, useEffect } from 'react'
-import { Link,Redirect,router, useRouter } from 'expo-router'
+import { Link, Redirect, router, useRouter } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
 import { AuthContext } from '../context/GlobalContext'
-import { images } from '../constants'
+import { icons, images } from '../constants'
 import CustomButton from '../components/CustomButton'
+import { useState } from 'react'
+import { Ionicons } from '@expo/vector-icons'
 const App = () => {
   const { loading, isLoggedIn } = useContext(AuthContext);
-  if (!loading && isLoggedIn) return <Redirect href="/home" />;
-
   const router = useRouter();
+
+  useEffect(() => {
+    if (!loading) {
+      if (isLoggedIn) {
+        router.replace("/home");
+      } else {
+        router.replace("/signIn");
+      }
+    }
+  }, [loading, isLoggedIn]);
+
   return (
-    <SafeAreaView className="bg-primary h-full">
-      <ScrollView contentContainerStyle={{height: '100%'}}>
+    <SafeAreaView className="bg-white h-full">
+      {loading ? (
+        <View className="flex-1 mt-7 items-center">
+          <ActivityIndicator size="large" color="#ffffff" />
+        </View>
+      ) : (
+      <ScrollView contentContainerStyle={{ height: '100%' }}>
         <View className="flex-1 justify-center items-center px-6">
           <View className="flex-row justify-center items-center gap-5">
-          <Image 
-            source={images.logo}
-            className="w-[80] h-[105]"
-          />
-          <Text className="text-4xl font-psemibold text-white">Quizzu</Text>
+            <Image
+              source={images.logo}
+              className="w-[80] h-[105]"
+            />
+            <Text className="text-4xl font-psemibold text-secondary-900">Quizzu</Text>
           </View>
-          <CustomButton 
-            name="Continue with email"
-            onPress={() =>  router.push("/signIn")}
-            containerStyles="bg-purple-200 mt-7"
-            textStyles="text-secondary-900 text-xl"
-          />
         </View>
-      <StatusBar backgroundColor='#7C72E5' style='light'/>
+        <StatusBar backgroundColor='white' style='light' />
       </ScrollView>
+      )}
     </SafeAreaView>
   )
 }

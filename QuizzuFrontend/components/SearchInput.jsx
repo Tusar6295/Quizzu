@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { icons } from '../constants';
 
-const SearchInput = ({value, onChangeText, onSearch, isLoading,otherStyles }) => {
+const SearchInput = ({value, onChangeText, onSearch,placeholder, isLoading,otherStyles }) => {
   return (
       <View className={`bg-secondary-100 w-full  border-2 border-gray-300 rounded-xl h-16 px-4 items-center focus:border-secondary flex-row`}>
         <TextInput
           className="text-base flex-1"
-          placeholder="Search for a category"
+          placeholder={placeholder}
           placeholderTextColor="#2C0B6A"
           cursorColor="#5718BF"
           value={value}
