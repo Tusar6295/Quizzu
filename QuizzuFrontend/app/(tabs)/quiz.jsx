@@ -8,11 +8,13 @@ import { getAllQuizzes, searchByQuiz } from '../../config/api'
 import SearchInput from '../../components/SearchInput'
 import { useEffect } from 'react'
 import QuizTile from '../../components/QuizTile'
+import { router, usePathname } from 'expo-router'
 
 const Quiz = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchParams, setSearchParams] = useState(null);
   const { data: quizList, isLoading, refetch } = useData(searchParams ? searchByQuiz : getAllQuizzes, searchParams);
+  const pathname = usePathname();
 
   const handleSearch = () => {
     setSearchParams(searchQuery.trim() ? searchQuery : null);
