@@ -120,3 +120,12 @@ export const getAllQuizzes = async () => {
     Alert.alert("Something went wrong, Please try again")
   }
 }
+
+export const getCategoryById = async (id) => {
+  try {
+    const response = await api.get(`/category/${id}`)
+    return response.data;
+  } catch (error) {
+    Alert.alert("something went wrong, Please try again")
+  }
+}

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/category")
@@ -28,5 +29,11 @@ public class CategoryController {
     public ResponseEntity<List<Category>> searchCategory(@RequestParam String searchQuery)
     {
         return ResponseEntity.ok(this.categoryService.searchCategory(searchQuery));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Category>> getTitle(@PathVariable("id") Long id)
+    {
+        return ResponseEntity.ok(this.categoryService.getCategoryById(id));
     }
 }

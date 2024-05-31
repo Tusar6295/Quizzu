@@ -31,12 +31,20 @@ public class QuizService {
         return this.quizRepository.save(quiz);
     }
     public List<Quiz> getQuizzesByCategory(Long categoryId) {
-        return this.quizRepository.findByCategoryId(categoryId);
+        List<Quiz> quizList = this.quizRepository.findByCategoryId(categoryId);
+
+        return quizList.stream()
+                .filter(quiz -> !quiz.getQuestions().isEmpty())
+                .toList();
     }
 
     public List<Quiz> getAllQuizzes()
     {
-        return this.quizRepository.findAll();
+        List<Quiz> quizList = this.quizRepository.findAll();
+
+        return quizList.stream()
+                .filter(quiz -> !quiz.getQuestions().isEmpty())
+                .toList();
     }
 
     public List<Quiz> searchQuiz(String searchQuery)

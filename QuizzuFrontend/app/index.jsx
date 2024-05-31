@@ -39,7 +39,7 @@ const App = () => {
             <Text className="text-4xl font-psemibold text-secondary-900">Quizzu</Text>
           </View>
         </View>
-        <StatusBar backgroundColor='white' style='light' />
+        <StatusBar backgroundColor='#000' style='light' />
       </ScrollView>
       )}
     </SafeAreaView>

@@ -4,47 +4,17 @@ import { AntDesign } from "@expo/vector-icons";
 
 const QuizTile = ({ title, noOfQuestions, onPress }) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.questions}>Questions: {noOfQuestions}</Text>
+    <View className="w-full h-[90] bg-white mb-4 justify-between rounded-2xl p-2 px-5 flex-row items-center">
+      <View className="">
+        <Text className="font-psemibold text-lg ">{title}</Text>
+        <Text className="text-base text-gray-600">{noOfQuestions} questions</Text>
       </View>
       <TouchableOpacity onPress={onPress}>
-        <AntDesign name="rightcircleo" size={24} color="black" />
+        <AntDesign name="rightcircleo" size={24} color="#7C72E5" />
       </TouchableOpacity>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-evenly",
-    padding: 15,
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 15,
-    borderColor: "#ccc",
-    backgroundColor: "white",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-  },
-  content: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  questions: {
-    fontSize: 16,
-    color: "#555",
-  },
-  button: {},
-});
 
 export default QuizTile;

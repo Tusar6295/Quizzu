@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { getAllQuizzes, searchByQuiz } from '../../config/api'
 import SearchInput from '../../components/SearchInput'
 import { useEffect } from 'react'
+import QuizTile from '../../components/QuizTile'
 
 const Quiz = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -26,45 +27,44 @@ const Quiz = () => {
   return (
     <SafeAreaView className="h-full bg-primary">
       <View className="px-8">
-      <View className=" my-6 space-y-6">
-        <View className="flex-row mb-6 justify-between">
-          <View>
-            <Text className="text-2xl font-psemibold text-white">All Quizzes</Text>
-          </View>
-        </View>
-        <SearchInput
-          value={searchQuery}
-          onChangeText={(e) => setSearchQuery(e)}
-          placeholder="Search for a quiz"
-          onSearch={handleSearch}
-          isLoading={isLoading}
-        />
-      </View>
-      {isLoading ? (
-        <View className="flex-1 mt-7 items-center">
-          <ActivityIndicator size="large" color="#ffffff" />
-        </View>
-      ) : (
-      <FlatList
-        className="w-full"
-        data={quizList}
-        keyExtractor={(item) => item.id.toString()}
-        numColumns={1}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-          >
-            <View className="w-full h-[70] mb-4 bg-white rounded-2xl justify-center items-center">
-              <Text className="text-xl font-psemibold text-secondary-900 text-center">{item.title}</Text>
+        <View className=" my-6 space-y-6">
+          <View className="flex-row mb-6 justify-between">
+            <View>
+              <Text className="text-2xl font-psemibold text-white">All Quizzes</Text>
             </View>
-          </TouchableOpacity>
+          </View>
+          <SearchInput
+            value={searchQuery}
+            onChangeText={(e) => setSearchQuery(e)}
+            placeholder="Search for a quiz"
+            onSearch={handleSearch}
+            isLoading={isLoading}
+          />
+        </View>
+        {isLoading ? (
+          <View className="flex-1 mt-7 items-center">
+            <ActivityIndicator size="large" color="#ffffff" />
+          </View>
+        ) : (
+          <FlatList
+            className="w-full"
+            data={quizList}
+            keyExtractor={(item) => item.id.toString()}
+            numColumns={1}
+            renderItem={({ item }) => (
+              <QuizTile
+                title={item.title}
+                noOfQuestions={item.questions.length}
+                onPress={() => handlePress(item.id)}
+              />
+            )}
+          />
         )}
-      />
-      )}
 
       </View>
-        
-    <StatusBar backgroundColor='#7C72E5' style='light'/>
-  </SafeAreaView>
+
+      <StatusBar backgroundColor='#7C72E5' style='light' />
+    </SafeAreaView>
   )
 }
 
