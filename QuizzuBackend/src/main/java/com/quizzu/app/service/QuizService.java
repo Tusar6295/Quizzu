@@ -51,6 +51,9 @@ public class QuizService {
 
     public List<Quiz> searchQuiz(String searchQuery)
     {
-        return this.quizRepository.findByTitleContainingIgnoreCase(searchQuery);
+        List<Quiz> quizList = this.quizRepository.findByTitleContainingIgnoreCase(searchQuery);
+        return quizList.stream()
+                .filter(quiz -> !quiz.getQuestions().isEmpty())
+                .toList();
     }
 }

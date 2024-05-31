@@ -3,7 +3,7 @@ import axios from "axios";
 import { Alert } from "react-native";
 
 const local='http://localhost:8080';
-const ip='http://192.168.69.55:8080';
+const ip='http://192.168.0.231:8080';
 //192.168.0.231
 //192.168.81.55
 export const api = axios.create({
@@ -111,19 +111,19 @@ export const getQuizzesByCategory = async (categoryId) => {
   }
 };
 
-export const getQuestionsByQuizId = async (id) => {
-  try {
-    console.log("quizId: " + id);
-    const response = await api.get(`/question/getQuestions?id=${id}`);
-    return response.data;
-  } catch (error) {
-    if (error.response && error.response.data) {
-      throw new Error(error.response.data.message);
-    } else {
-      Alert.alert("Something went wrong. Please try again.");
-    }
-  }
-};
+// export const getQuestionsByQuizId = async (id) => {
+//   try {
+//     console.log("quizId: " + id);
+//     const response = await api.get(`/question/getQuestions?id=${id}`);
+//     return response.data;
+//   } catch (error) {
+//     if (error.response && error.response.data) {
+//       throw new Error(error.response.data.message);
+//     } else {
+//       Alert.alert("Something went wrong. Please try again.");
+//     }
+//   }
+// };
 
 export const getQuestionsByQuizId = async (id) => {
   try {

@@ -55,7 +55,12 @@ const Quiz = () => {
               <QuizTile
                 title={item.title}
                 noOfQuestions={item.questions.length}
-                onPress={() => handlePress(item.id)}
+                onPress={() => {
+                  const quizId = item.id;
+                  if (pathname.startsWith("/Questions"))
+                    router.setParams({ quizId });
+                  else router.push(`/Questions/${quizId}`);
+                }}
               />
             )}
           />
