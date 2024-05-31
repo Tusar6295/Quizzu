@@ -1,6 +1,6 @@
 import { View, Text, Image, ActivityIndicator } from "react-native";
 import React from "react";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, usePathname, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import useData from "../../config/useData";
 import { getCategoryById, getQuizzesByCategory } from "../../config/api";
@@ -15,6 +15,7 @@ const QuizList = () => {
   const { categoryId } = useLocalSearchParams();
   const { data: quizList, isLoading } = useData(getQuizzesByCategory, categoryId);
   const [category, setCategory] = useState(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -31,11 +32,16 @@ const QuizList = () => {
 
   const renderItem = ({ item }) => (
     <View className="px-4">
-      <QuizTile
-        title={item.title}
-        noOfQuestions={item.questions.length}
-        onPress={() => handlePress(item.id)}
-      />
+    <QuizTile
+      title={item.title}
+      noOfQuestions={item.questions.length}
+      onPress={() => {
+        const quizId = item.id;
+        if (pathname.startsWith("/Questions"))
+          router.setParams({ quizId });
+        else router.push(`/Questions/${quizId}`);
+      }}
+    />
     </View>
   );
 

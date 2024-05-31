@@ -20,7 +20,8 @@ public class QuizService {
 
     @Autowired
     private CategoryRepository categoryRepository;
-    public Quiz createQuiz(QuizDto quizDto){
+
+    public Quiz createQuiz(QuizDto quizDto) {
         Quiz quiz = new Quiz();
         Category category = this.categoryRepository.findByTitleIgnoreCase(quizDto.getCategory());
 
@@ -30,6 +31,7 @@ public class QuizService {
 
         return this.quizRepository.save(quiz);
     }
+
     public List<Quiz> getQuizzesByCategory(Long categoryId) {
         List<Quiz> quizList = this.quizRepository.findByCategoryId(categoryId);
 

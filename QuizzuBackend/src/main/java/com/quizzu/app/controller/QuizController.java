@@ -16,15 +16,15 @@ import java.util.List;
 public class QuizController {
     @Autowired
     private QuizService quizService;
+
     @GetMapping("/getQuizList/{categoryId}")
-    public ResponseEntity<List<Quiz>> getQuizList(@PathVariable("categoryId") Long categoryId){
+    public ResponseEntity<List<Quiz>> getQuizList(@PathVariable("categoryId") Long categoryId) {
         List<Quiz> quizzes = this.quizService.getQuizzesByCategory(categoryId);
         return ResponseEntity.ok(quizzes);
     }
 
     @GetMapping("/getAllQuizzes")
-    public List<Quiz> getAllQuizzes()
-    {
+    public List<Quiz> getAllQuizzes() {
         return this.quizService.getAllQuizzes();
     }
 
@@ -34,5 +34,3 @@ public class QuizController {
         return this.quizService.searchQuiz(searchQuery);
     }
 }
-
-
