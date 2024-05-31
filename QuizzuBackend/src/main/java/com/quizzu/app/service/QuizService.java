@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import java.util.List;
+
 @Service
 public class QuizService {
 
@@ -32,5 +34,9 @@ public class QuizService {
 
     public List<Quiz> getQuizzesByCategory(Long categoryId) {
         return this.quizRepository.findByCategoryId(categoryId);
+    }
+
+    public List<Quiz> getAllQuizzes() {
+        return this.quizRepository.findAll();
     }
 }

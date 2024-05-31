@@ -22,4 +22,10 @@ public class QuizController {
         List<Quiz> quizzes = this.quizService.getQuizzesByCategory(categoryId);
         return ResponseEntity.ok(quizzes);
     }
+
+    @Autowired
+    @GetMapping("/getAllQuizzes")
+    public List<Quiz> getAllQuizzes() {
+        return this.quizService.getAllQuizzes();
+    }
 }

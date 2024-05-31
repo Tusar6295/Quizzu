@@ -5,16 +5,22 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import useData from "../../config/useData";
 import { getQuizzesByCategory } from "../../config/api";
 import { FlatList } from "react-native";
+import QuizTile from "../../components/QuizTile";
 
 const QuizList = () => {
   const { categoryId } = useLocalSearchParams();
-  console.log(categoryId);
   const { data: quizList } = useData(getQuizzesByCategory, categoryId);
 
+  const handlePress = (quizId) => {
+    console.log("Quiz ID:", quizId);
+  };
+
   const renderItem = ({ item }) => (
-    <View style={{ padding: 20, borderBottomWidth: 1 }}>
-      <Text>{item.title}</Text>
-    </View>
+    <QuizTile
+      title={item.title}
+      noOfQuestions={item.questions.length}
+      onPress={() => handlePress(item.id)}
+    />
   );
 
   return (
