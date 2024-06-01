@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   BackHandler,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import {
   useLocalSearchParams,
@@ -30,7 +31,7 @@ const QuestionList = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
-  const [timer, setTimer] = useState(10);
+  const [timer, setTimer] = useState(15);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
@@ -56,7 +57,7 @@ const QuestionList = () => {
         answers: shuffleArray([...question.answers]),
       }));
       setShuffledQuestions(shuffledQs);
-      setTimer(10);
+      setTimer(15);
       setSelectedOptionIndex(null);
       setIsAnswered(false);
     }
@@ -94,7 +95,7 @@ const QuestionList = () => {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setIsAnswered(false);
       setSelectedOptionIndex(null);
-      setTimer(10);
+      setTimer(15);
     } else {
       setResultMessage(
         <View className="flex-row justify-between">
@@ -147,7 +148,7 @@ const QuestionList = () => {
     }));
     setShuffledQuestions(shuffledQs);
     setCurrentQuestionIndex(0);
-    setTimer(10);
+    setTimer(15);
     setCorrectAnswers(0);
     setWrongAnswers(0);
   };
@@ -155,20 +156,21 @@ const QuestionList = () => {
   const currentQuestion = shuffledQuestions[currentQuestionIndex];
 
   return (
-    <SafeAreaView className="h-full bg-primary px-8 py-10">
+    <SafeAreaView className="h-full bg-primary px-8 pt-10">
+      <ScrollView contentContainerStyle={{height:'100%'}}>
       {isLoading ? (
         <View className="flex-1 justify-center items-center">
           <ActivityIndicator size="large" color="#fff" />
         </View>
       ) : (
         currentQuestion && (
-          <View key={currentQuestion.id} className="mb-4 mt-14">
+          <View key={currentQuestion.id} className="mb-4 mt-10">
             <View className="bg-white p-4 py-8 mb-12 rounded-3xl relative">
               <View className="absolute -top-[30] left-[45%] w-[65] h-[65] justify-center rounded-full items-center bg-white">
                 <AnimatedCircularProgress
                   size={50}
                   width={5}
-                  fill={(timer / 10) * 100}
+                  fill={(timer / 15) * 100}
                   tintColor="#A42FC1"
                   backgroundColor="#D5D5D5"
                   style={{ backgroundColor: "white", borderRadius: 30 }}
@@ -287,6 +289,7 @@ const QuestionList = () => {
           </View>
         </View>
       </Modal>
+      </ScrollView>
     </SafeAreaView>
   );
 };

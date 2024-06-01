@@ -65,7 +65,7 @@ const TabLayout = () => {
                     )
                 }}
             />
-            <Tabs.Screen
+            {/* <Tabs.Screen
                 name="history"
                 options={{
                     title: "History",
@@ -79,7 +79,7 @@ const TabLayout = () => {
                         />
                     )
                 }}
-            />
+            /> */}
         </Tabs>
         <StatusBar backgroundColor='#7C72E5' style='light'/>
     </>
