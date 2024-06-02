@@ -156,139 +156,138 @@ const QuestionList = () => {
   const currentQuestion = shuffledQuestions[currentQuestionIndex];
 
   return (
-    <SafeAreaView className="h-full bg-primary px-8 pt-10">
-      <ScrollView contentContainerStyle={{height:'100%'}}>
-      {isLoading ? (
-        <View className="flex-1 justify-center items-center">
-          <ActivityIndicator size="large" color="#fff" />
-        </View>
-      ) : (
-        currentQuestion && (
-          <View key={currentQuestion.id} className="mb-4 mt-10">
-            <View className="bg-white p-4 py-8 mb-12 rounded-3xl relative">
-              <View className="absolute -top-[30] left-[45%] w-[65] h-[65] justify-center rounded-full items-center bg-white">
-                <AnimatedCircularProgress
-                  size={50}
-                  width={5}
-                  fill={(timer / 15) * 100}
-                  tintColor="#A42FC1"
-                  backgroundColor="#D5D5D5"
-                  style={{ backgroundColor: "white", borderRadius: 30 }}
-                >
-                  {() => (
-                    <Text className="text-base text-secondary-900 font-psemibold ">
-                      {timer}
-                    </Text>
-                  )}
-                </AnimatedCircularProgress>
-              </View>
-              <Text className="text-xl text-center text-[#A42FC1] my-4">
-                Question {currentQuestionIndex + 1}/{shuffledQuestions.length}
-              </Text>
-              <Text className="text-2xl text-center font-pmedium">
-                {currentQuestion.title.charAt(0).toUpperCase() +
-                  currentQuestion.title.slice(1)}{" "}
-                ?
-              </Text>
-            </View>
-            {currentQuestion.answers.map((answer, answerIndex) => (
-              <TouchableOpacity
-                key={answer.id}
-                className={`flex-row items-center justify-between w-full p-5 my-3 rounded-xl ${
-                  isAnswered &&
-                  answerIndex === selectedOptionIndex &&
-                  !answer.correct
-                    ? "bg-red-50 border-2 border-red-500"
-                    : "bg-white"
-                } ${
-                  isAnswered && answer.correct
-                    ? "bg-green-50 border-2 border-green-500"
-                    : ""
-                }`}
-                onPress={() => handleAnswer(answerIndex)}
-                disabled={isAnswered}
-              >
-                <Text className="text-lg font-psemibold">{answer.text}</Text>
-                {isAnswered && answer.correct && (
-                  <Feather name="check-circle" size={20} color="green" />
-                )}
-                {isAnswered &&
-                  !answer.correct &&
-                  answerIndex === selectedOptionIndex && (
-                    <Feather name="x-circle" size={20} color="red" />
-                  )}
-              </TouchableOpacity>
-            ))}
+    <SafeAreaView className="h-full bg-primary">
+      <ScrollView contentContainerStyle={{ height: '100%' }}>
+        {isLoading ? (
+          <View className="flex-1 justify-center items-center">
+            <ActivityIndicator size="large" color="#fff" />
           </View>
-        )
-      )}
-      {!isLoading && (
-        <TouchableOpacity
-          className="p-4 bg-secondary-200 rounded-xl mt-10 flex-row items-center justify-center"
-          onPress={handleNext}
+        ) : (
+          currentQuestion && (
+            <View key={currentQuestion.id} className="mb-4 mt-10 px-8">
+              <View className="bg-white p-4 py-8 mb-12 rounded-3xl relative">
+                <View className="absolute -top-[30] left-[45%] w-[65] h-[65] justify-center rounded-full items-center bg-white">
+                  <AnimatedCircularProgress
+                    size={50}
+                    width={5}
+                    fill={(timer / 15) * 100}
+                    tintColor="#A42FC1"
+                    backgroundColor="#D5D5D5"
+                    style={{ backgroundColor: "white", borderRadius: 30 }}
+                  >
+                    {() => (
+                      <Text className="text-base text-secondary-900 font-psemibold ">
+                        {timer}
+                      </Text>
+                    )}
+                  </AnimatedCircularProgress>
+                </View>
+                <Text className="text-xl text-center text-[#A42FC1] my-4">
+                  Question {currentQuestionIndex + 1}/{shuffledQuestions.length}
+                </Text>
+                <Text className="text-2xl text-center font-pmedium">
+                  {currentQuestion.title.charAt(0).toUpperCase() +
+                    currentQuestion.title.slice(1)}{" "}
+                  ?
+                </Text>
+              </View>
+              {currentQuestion.answers.map((answer, answerIndex) => (
+                <TouchableOpacity
+                  key={answer.id}
+                  className={`flex-row items-center justify-between w-full p-5 my-3 rounded-xl ${isAnswered &&
+                      answerIndex === selectedOptionIndex &&
+                      !answer.correct
+                      ? "bg-red-50 border-2 border-red-500"
+                      : "bg-white"
+                    } ${isAnswered && answer.correct
+                      ? "bg-green-50 border-2 border-green-500"
+                      : ""
+                    }`}
+                  onPress={() => handleAnswer(answerIndex)}
+                  disabled={isAnswered}
+                >
+                  <Text className="text-lg font-psemibold">{answer.text}</Text>
+                  {isAnswered && answer.correct && (
+                    <Feather name="check-circle" size={20} color="green" />
+                  )}
+                  {isAnswered &&
+                    !answer.correct &&
+                    answerIndex === selectedOptionIndex && (
+                      <Feather name="x-circle" size={20} color="red" />
+                    )}
+                </TouchableOpacity>
+              ))}
+              {!isLoading && (
+                <TouchableOpacity
+                  className="p-4 bg-secondary-200 rounded-xl mt-10  flex-row items-center justify-center"
+                  onPress={handleNext}
+                >
+                  <Text className="text-xl font-psemibold text-black text-center mr-2">
+                    Next
+                  </Text>
+                  <Ionicons name="chevron-forward-outline" size={22} />
+                </TouchableOpacity>
+              )}
+            </View>
+          )
+        )}
+
+
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={modalVisible}
+          onRequestClose={closeModal}
         >
-          <Text className="text-xl font-psemibold text-black text-center mr-2">
-            Next
-          </Text>
-          <Ionicons name="chevron-forward-outline" size={22} />
-        </TouchableOpacity>
-      )}
+          <View className="flex-1 justify-center items-center bg-primary">
+            <View className="w-[80vw] bg-white p-6 rounded-3xl">
+              <Text className="text-2xl text-center font-psemibold text-secondary mb-6">
+                Your score: {correctAnswers * 10}
+              </Text>
+              {resultMessage}
+              <View className="flex-row justify-between mt-10 w-full">
+                <View className="items-center">
+                  <TouchableOpacity
+                    className="w-[60] h-[60] rounded-full justify-center items-center"
+                    style={{ backgroundColor: "#7C72E5" }}
+                    onPress={() => navigation.goBack()}
+                  >
+                    <Ionicons name="arrow-back-circle" size={30} color="white" />
+                  </TouchableOpacity>
+                  <Text className="text-base text-center font-psemibold mt-2">
+                    Go back
+                  </Text>
+                </View>
 
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={modalVisible}
-        onRequestClose={closeModal}
-      >
-        <View className="flex-1 justify-center items-center bg-primary">
-          <View className="w-[80vw] bg-white p-6 rounded-3xl">
-            <Text className="text-2xl text-center font-psemibold text-secondary mb-6">
-              Your score: {correctAnswers * 10}
-            </Text>
-            {resultMessage}
-            <View className="flex-row justify-between mt-10 w-full">
-              <View className="items-center">
-                <TouchableOpacity
-                  className="w-[60] h-[60] rounded-full justify-center items-center"
-                  style={{ backgroundColor: "#7C72E5" }}
-                  onPress={() => navigation.goBack()}
-                >
-                  <Ionicons name="arrow-back-circle" size={30} color="white" />
-                </TouchableOpacity>
-                <Text className="text-base text-center font-psemibold mt-2">
-                  Go back
-                </Text>
-              </View>
+                <View className="items-center">
+                  <TouchableOpacity
+                    className=" w-[60] h-[60]  rounded-full justify-center items-center"
+                    style={{ backgroundColor: "#7C72E5" }}
+                    onPress={() => navigation.navigate("home")}
+                  >
+                    <Ionicons name="home" size={30} color="white" />
+                  </TouchableOpacity>
+                  <Text className="text-base text-center font-psemibold mt-2">
+                    Home
+                  </Text>
+                </View>
 
-              <View className="items-center">
-                <TouchableOpacity
-                  className=" w-[60] h-[60]  rounded-full justify-center items-center"
-                  style={{ backgroundColor: "#7C72E5" }}
-                  onPress={() => navigation.navigate("home")}
-                >
-                  <Ionicons name="home" size={30} color="white" />
-                </TouchableOpacity>
-                <Text className="text-base text-center font-psemibold mt-2">
-                  Home
-                </Text>
-              </View>
-
-              <View className="items-center">
-                <TouchableOpacity
-                  className=" w-[60] h-[60]  rounded-full justify-center items-center"
-                  style={{ backgroundColor: "#7C72E5" }}
-                  onPress={restartQuiz}
-                >
-                  <FontAwesome name="refresh" size={30} color="white" />
-                </TouchableOpacity>
-                <Text className="text-base text-center font-psemibold mt-2">
-                  Play Again
-                </Text>
+                <View className="items-center">
+                  <TouchableOpacity
+                    className=" w-[60] h-[60]  rounded-full justify-center items-center"
+                    style={{ backgroundColor: "#7C72E5" }}
+                    onPress={restartQuiz}
+                  >
+                    <FontAwesome name="refresh" size={30} color="white" />
+                  </TouchableOpacity>
+                  <Text className="text-base text-center font-psemibold mt-2">
+                    Play Again
+                  </Text>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-      </Modal>
+        </Modal>
       </ScrollView>
     </SafeAreaView>
   );

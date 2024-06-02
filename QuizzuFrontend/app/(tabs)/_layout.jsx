@@ -6,7 +6,7 @@ import { StatusBar } from 'expo-status-bar'
 import { AuthContext } from '../../context/GlobalContext'
 const TabIcon = ({icon,color,name,focused}) => {
     return (
-        <View className="items-center justify-center gap-2">
+        <View className="items-center justify-center gap-1">
             <Image
                 source={icon}
                 resizeMode='contain'
@@ -31,6 +31,7 @@ const TabLayout = () => {
                     backgroundColor: "#ECE8FF",
                     borderTopWidth: 1,
                     height: 75,
+                    paddingTop: 10,
                 }
             }}
         >

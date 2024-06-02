@@ -3,9 +3,9 @@ import axios from "axios";
 import { Alert } from "react-native";
 
 const local='http://localhost:8080';
-const ip='http://192.168.0.231:8080';
+const ip='http://192.168.50.55:8080';
 //192.168.0.231
-//192.168.81.55
+//192.168.50.55
 export const api = axios.create({
   baseURL: ip,
   headers: {
